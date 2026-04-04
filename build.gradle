@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-rest'
+    implementation 'io.quarkiverse.jdbc:quarkus-jdbc-sqlite4j:0.0.8'
+    implementation 'io.quarkus:quarkus-info'
+    implementation 'io.quarkus:quarkus-container-image-docker'
+    implementation 'io.quarkus:quarkus-messaging-mqtt'
+    implementation 'io.quarkus:quarkus-config-yaml'
+    implementation 'io.quarkus:quarkus-logging-json'
+    implementation 'io.quarkus:quarkus-micrometer'
+    implementation 'io.quarkus:quarkus-grpc'
+    implementation 'io.quarkus:quarkus-rest-jsonb'
+    implementation 'io.quarkus:quarkus-websockets-client'
+    implementation 'io.quarkus:quarkus-websockets-next'
+    implementation 'io.quarkus:quarkus-hibernate-validator'
+    implementation 'io.quarkus:quarkus-smallrye-openapi'
+    implementation 'io.quarkus:quarkus-quartz'
+    implementation 'io.quarkus:quarkus-rest-jackson'
+    implementation 'io.quarkiverse.quinoa:quarkus-quinoa:2.8.0'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-vertx-http'
+    implementation 'org.apache.camel.quarkus:camel-quarkus-snakeyaml'
+    implementation 'io.quarkus:quarkus-arc'
+    testImplementation 'io.quarkus:quarkus-junit'
+    testImplementation 'io.rest-assured:rest-assured'
+}
+
+group = 'org.acme'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
