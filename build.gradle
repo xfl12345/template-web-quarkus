@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+    //noinspection VulnerableLibrariesLocal
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-rest'
@@ -39,13 +40,18 @@ group = 'org.acme'
 version = '0.0.1-SNAPSHOT'
 
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+        vendor = JvmVendorSpec.GRAAL_VM
+    }
+
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
 }
 
 compileJava {
     options.encoding = 'UTF-8'
-    options.compilerArgs << '-parameters'
+    options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation' << '-Xdoclint:none' << '-parameters'
 }
 
 compileTestJava {
