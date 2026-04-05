@@ -7,6 +7,7 @@ import VueRouter from 'vue-router/vite'
 
 // prettier
 const fmt: UserConfig['fmt'] = {
+  ignorePatterns: ['typed-router.d.ts'],
   semi: false,
   singleQuote: true,
   jsxSingleQuote: true,
