@@ -1,100 +1,39 @@
-# code-with-quarkus
+# Template Web Quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Quarkus Web 项目模板，开箱即用。
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## ✨亮点
 
-## Running the application in dev mode
+|          关键点           | 好处                                                     |
+|:----------------------:|:-------------------------------------------------------|
+|     Gradle Wrapper     | 项目级 Gradle 版本，和环境 Gradle 版本解耦。真正做到谁都能跑起来。              |
+|    Quarkus + Quinoa    | 云原生！前后端无缝集成！闪电般的热重载⚡️！一个项目包揽前后端，方便 AI 直接掌控全局，一键梭哈💥    |
+|         foojay         | 统一项目的 JDK 版本。foojay 会自动判断JDK环境，当环境不符合要求时会自动下载安装匹配的 JDK |
+| Vite Plus + Vue3 Vapor | Web前端最前沿的脚手架，闪电般的 IDE 响应⚡！闪电般的构建速度⚡！极致的浏览器UI响应式性能🚀！   |
 
-You can run your application in dev mode that enables live coding using:
+## 🚀快速开始
 
-```shell script
+### 🖥️环境要求
+
+- 因为需要能跑起 Gradle 9.4+ ，所以要求环境有 JDK 17+
+- 因为前端绑定了 Vite Plus 命令，所以要求环境有 [Vite Plus](https://viteplus.dev/)
+
+### 🔧常用命令
+
+```bash
+# 开发模式（热重载）
 ./gradlew quarkusDev
-```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
+# 构建
 ./gradlew build
+
+# 运行测试
+./gradlew test
+
+# 构建 Docker 镜像
+./gradlew build -Dquarkus.container-image.build=true
 ```
 
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+## ✅️许可证
 
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./gradlew build -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/code-with-quarkus-0.0.1-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- YAML Configuration ([guide](https://quarkus.io/guides/config-yaml)): Use YAML to configure your Quarkus application
-- Logging JSON ([guide](https://quarkus.io/guides/logging#json-logging)): Add JSON formatter for console logging
-- Micrometer metrics ([guide](https://quarkus.io/guides/micrometer)): Instrument the runtime and your application with dimensional metrics using Micrometer.
-- REST JSON-B ([guide](https://quarkus.io/guides/rest#json-serialisation)): JSON-B serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- WebSockets Client ([guide](https://quarkus.io/guides/websockets)): Client for WebSocket communication channel
-- WebSockets Next ([guide](https://quarkus.io/guides/websockets-next-reference)): Implementation of the WebSocket API with enhanced efficiency and usability
-- Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Validate object properties (field, getter) and method parameters for your beans (REST, CDI, Jakarta Persistence)
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes with Swagger UI
-- Quartz ([guide](https://quarkus.io/guides/quartz)): Schedule clustered tasks with Quartz
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Quinoa ([guide](https://quarkiverse.github.io/quarkiverse-docs/quarkus-quinoa/dev/index.html)): Develop, build, and serve your npm-compatible web applications such as React, Angular, Vue, Lit, Svelte, Astro, SolidJS, and others alongside Quarkus.
-- Camel Vert.x HTTP Client ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/vertx-http.html)): Camel HTTP client support with Vert.x
-- Camel SnakeYAML ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/snakeyaml.html)): Marshal and unmarshal Java objects to and from YAML using SnakeYAML
-
-## Provided Code
-
-### YAML Config
-
-Configure your application with YAML
-
-[Related guide section...](https://quarkus.io/guides/config-reference#configuration-examples)
-
-The Quarkus application configuration is located in `src/main/resources/application.yml`.
-
-### gRPC
-
-Create your first gRPC service
-
-[Related guide section...](https://quarkus.io/guides/grpc-getting-started)
-
-### Quinoa
-
-Quinoa codestart added a tiny Vite app in src/main/webui. The page is configured to be visible on <a href="/quinoa">/quinoa</a>.
-
-[Related guide section...](https://quarkiverse.github.io/quarkiverse-docs/quarkus-quinoa/dev/index.html)
-
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+[MIT](LICENSE) © Flynn Xu
