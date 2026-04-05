@@ -3,6 +3,10 @@ greeting:
 quarkus:
   quinoa:
     ui-root-path: "quinoa"
-    package-manager-install:
-      node-version: "20.10.0"
-      "~": true
+    package-manager: "pnpm"
+    package-manager-command:
+      dev: "run dev"
+    enable-spa-routing: true
+    build-dir: "dist"
+    dev-server:
+      port: 5173
