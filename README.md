@@ -1,4 +1,4 @@
-# Template Web Quarkus
+# Quarkus Web Template
 
 Quarkus Web 项目模板，开箱即用。
 
