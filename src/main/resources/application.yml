@@ -2,7 +2,6 @@ greeting:
   message: "hello"
 quarkus:
   quinoa:
-    ui-root-path: "quinoa"
     package-manager: "pnpm"
     package-manager-command:
       dev: "run dev"

@@ -43,7 +43,6 @@ const lint: UserConfig['lint'] = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/quinoa',
   staged: {
     '*': 'vp check --fix',
   },
