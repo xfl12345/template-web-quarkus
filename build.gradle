@@ -18,7 +18,6 @@ dependencies {
     implementation 'io.quarkus:quarkus-container-image-docker'
     implementation 'io.quarkus:quarkus-messaging-mqtt'
     implementation 'io.quarkus:quarkus-config-yaml'
-    implementation 'io.quarkus:quarkus-logging-json'
     implementation 'io.quarkus:quarkus-micrometer'
     implementation 'io.quarkus:quarkus-grpc'
     implementation 'io.quarkus:quarkus-rest-jsonb'
