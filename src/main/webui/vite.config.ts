@@ -43,6 +43,7 @@ const lint: UserConfig['lint'] = {
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/ui',
   staged: {
     '*': 'vp check --fix',
   },
