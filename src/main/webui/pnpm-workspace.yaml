@@ -12,7 +12,22 @@ overrides:
   '@vue/server-renderer': 'beta'
   '@vue/shared': 'beta'
   '@vue/compat': 'beta'
+  'oxlint': 'latest'
+  'oxfmt': 'latest'
+  'eslint-plugin-oxlint': 'latest'
 
 peerDependencyRules:
   allowAny:
-    - 'vue'
+    - vue
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vitest: npm:@voidzero-dev/vite-plus-test@latest
+  vite-plus: latest
+  # vite: npm:@voidzero-dev/vite-plus-core@^0.1.21
+  # vitest: npm:@voidzero-dev/vite-plus-test@^0.1.21
+  # vite-plus: ^0.1.21
