@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg?url&no-inline'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { ROUTER_NAMES } from '@/router/TheConst'
+
 const count = ref(0)
 function increment() {
   count.value += 1
@@ -11,7 +13,7 @@ function increment() {
 
 const router = useRouter()
 function jumpRouteInspector() {
-  router.push('/routes')
+  router.push(ROUTER_NAMES.ROUTES)
 }
 </script>
 

@@ -5,6 +5,10 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import { defineConfig, type UserConfig } from 'vite-plus'
 import VueRouter from 'vue-router/vite'
 
+// oxfmt 0.48.0 暂不支持解析省略文件后缀的导入
+// @ts-expect-error TS5097
+import { VueRouterConstPlugin } from './vite/vite-plugin-router-const.ts'
+
 // prettier
 const fmt: UserConfig['fmt'] = {
   ignorePatterns: ['typed-router.d.ts'],
@@ -49,7 +53,7 @@ export default defineConfig({
   },
   fmt,
   lint,
-  plugins: [VueRouter(), vue(), vueJsx(), vueDevTools()],
+  plugins: [VueRouter(), VueRouterConstPlugin(), vue(), vueJsx(), vueDevTools()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

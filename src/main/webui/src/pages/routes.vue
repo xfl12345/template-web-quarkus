@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
+import { ROUTER_NAMES } from '@/router/TheConst'
+
 const router = useRouter()
 const routes = router.getRoutes()
 </script>
@@ -35,7 +37,7 @@ const routes = router.getRoutes()
       </tbody>
     </table>
     <div :class="$style.card">
-      <button type="button" @click="router.push('/')">← Back</button>
+      <button type="button" @click="router.push(ROUTER_NAMES.INDEX)">← Back</button>
     </div>
   </div>
 </template>
