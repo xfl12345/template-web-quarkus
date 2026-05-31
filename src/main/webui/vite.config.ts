@@ -2,12 +2,9 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { fileURLToPath, URL } from 'node:url'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { VueRouterAutoGenerateConst } from 'vite-plugin-vue-router-auto-generate-const'
 import { defineConfig, type UserConfig } from 'vite-plus'
 import VueRouter from 'vue-router/vite'
-
-// oxfmt 0.48.0 暂不支持解析省略文件后缀的导入
-// @ts-expect-error TS5097
-import { VueRouterConstPlugin } from './vite/vite-plugin-router-const.ts'
 
 // prettier
 const fmt: UserConfig['fmt'] = {
@@ -53,7 +50,7 @@ export default defineConfig({
   },
   fmt,
   lint,
-  plugins: [VueRouter(), VueRouterConstPlugin(), vue(), vueJsx(), vueDevTools()],
+  plugins: [VueRouter(), VueRouterAutoGenerateConst(), vue(), vueJsx(), vueDevTools()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
