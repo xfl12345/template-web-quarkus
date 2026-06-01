@@ -2,6 +2,11 @@ greeting:
   message: "hello"
 
 quarkus:
+  native:
+    debug:
+      enabled: true
+    builder-image: graalvm
+    container-build: true
   quinoa:
     ui-root-path: "ui"
     package-manager: "pnpm"

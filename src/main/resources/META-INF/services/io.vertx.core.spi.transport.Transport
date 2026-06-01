@@ -1,0 +1,3 @@
+io.vertx.core.impl.transports.EpollTransport
+io.vertx.core.impl.transports.KQueueTransport
+io.vertx.core.impl.transports.JDKTransport
