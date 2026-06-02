@@ -12,6 +12,15 @@ dependencies {
     //noinspection VulnerableLibrariesLocal
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}")
+
+    // Native transport (Unix Domain Socket support)
+    // implementation 'io.netty:netty-transport-native-epoll::linux-x86_64'
+    // implementation 'io.netty:netty-transport-native-epoll::linux-aarch_64'
+    // implementation 'io.netty:netty-transport-native-kqueue::linux-x86_64'
+    // implementation 'io.netty:netty-transport-native-kqueue::linux-aarch_64'
+    // Source: https://mvnrepository.com/artifact/io.netty/netty-all
+    implementation 'io.netty:netty-all'
+
     implementation 'io.quarkus:quarkus-rest'
     implementation 'io.quarkiverse.jdbc:quarkus-jdbc-sqlite4j:0.0.8'
     implementation 'io.quarkus:quarkus-info'
