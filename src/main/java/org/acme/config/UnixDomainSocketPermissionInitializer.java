@@ -1,4 +1,4 @@
-package org.acme;
+package org.acme.config;
 
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;

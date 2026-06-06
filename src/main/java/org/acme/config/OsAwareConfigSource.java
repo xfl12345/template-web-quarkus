@@ -1,4 +1,4 @@
-package org.acme;
+package org.acme.config;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkus.runtime.annotations.RegisterResources;
