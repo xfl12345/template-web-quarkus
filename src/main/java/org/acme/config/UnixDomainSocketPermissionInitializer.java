@@ -9,6 +9,7 @@ import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermission;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * HTTP 服务器启动后，将 UDS 文件权限设为 {@code rwxrwxrwx}（等效 chmod 777）。
+ * HTTP 服务器启动后，将 UDS 文件权限设为完全开放。
  *
  * <p>Quarkus 不提供 UDS 文件权限的配置项。
  * 默认权限受进程 umask 控制，无法满足 Nginx 反代等跨用户访问场景。
@@ -49,24 +50,21 @@ public class UnixDomainSocketPermissionInitializer {
 
         String udsPath = getUdsPath(config);
         var path = Path.of(udsPath);
+        try {
+            Files.createDirectories(path.getParent());
+        } catch (FileAlreadyExistsException ignore) {
+        } catch (IOException | UnsupportedOperationException e) {
+            Log.warnf(e, "尝试创建 UDS 文件目录[%s]失败", path.getParent());
+        }
+
         if (!Files.exists(path)) {
             Log.warnf("UDS 文件不存在，跳过权限设置: %s", udsPath);
             return;
         }
 
         try {
-            Files.setPosixFilePermissions(path, Set.of(
-                    PosixFilePermission.OWNER_READ,
-                    PosixFilePermission.OWNER_WRITE,
-                    PosixFilePermission.OWNER_EXECUTE,
-                    PosixFilePermission.GROUP_READ,
-                    PosixFilePermission.GROUP_WRITE,
-                    PosixFilePermission.GROUP_EXECUTE,
-                    PosixFilePermission.OTHERS_READ,
-                    PosixFilePermission.OTHERS_WRITE,
-                    PosixFilePermission.OTHERS_EXECUTE
-            ));
-            Log.infof("已设置 UDS 文件权限为 777: %s", udsPath);
+            Files.setPosixFilePermissions(path, Set.of(PosixFilePermission.values()));
+            Log.infof("已设置 UDS 文件权限为完全开放: %s", udsPath);
         } catch (IOException e) {
             Log.errorf(e, "设置 UDS 文件权限失败: %s", udsPath);
         }

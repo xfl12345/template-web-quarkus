@@ -1,12 +1,16 @@
 package org.acme.config;
 
+import io.quarkus.logging.Log;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkus.runtime.annotations.RegisterResources;
 import io.quarkus.runtime.annotations.StaticInitSafe;
 import io.quarkus.vertx.core.runtime.config.VertxConfiguration;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -35,16 +39,38 @@ import java.util.Set;
 @StaticInitSafe
 public class OsAwareConfigSource implements ConfigSource {
 
-    private static final Map<String, String> CONFIG;
+    Map<String, String> CONFIG = Collections.emptyMap();
 
-    static {
+    boolean isUnixLikeSystem() {
         String osName = System.getProperty("os.name", "").toLowerCase();
-        boolean unixLike = !osName.startsWith("windows");
-        CONFIG = unixLike
-                ? Map.of(
+        return !osName.startsWith("windows");
+    }
+
+    void init() {
+        if (!this.isUnixLikeSystem()) {
+            return;
+        }
+
+        String udsDirPath = "/var/run";
+        String fallbackUdsFilePath = "/tmp/app/quarkus.sock";
+        var unixConfig = Map.of(
                 "quarkus.vertx.prefer-native-transport", "true",
-                "quarkus.http.domain-socket-enabled", "true")
-                : Collections.emptyMap();
+                "quarkus.http.domain-socket-enabled", "true");
+
+        var writable = Files.isWritable(Path.of(udsDirPath));
+        if (!writable) {
+            Log.warnf("目录 [%s] 不可写，UDS 的默认路径将使用备用路径 [%s]", udsDirPath, fallbackUdsFilePath);
+            var tempMap = HashMap.<String, String>newHashMap(unixConfig.size() + 1);
+            tempMap.putAll(unixConfig);
+            tempMap.put("quarkus.http.domain-socket", fallbackUdsFilePath);
+            unixConfig = Map.copyOf(tempMap);
+        }
+
+        CONFIG = unixConfig;
+    }
+
+    public OsAwareConfigSource() {
+        this.init();
     }
 
     @Override
