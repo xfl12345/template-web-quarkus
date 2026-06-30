@@ -25,11 +25,11 @@ peerDependencyRules:
     vite: '*'
     vitest: '*'
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: npm:@voidzero-dev/vite-plus-test@latest
-  vite-plus: latest
+  vite: npm:@voidzero-dev/vite-plus-core@^0.2.1
+  vitest: 4.1.9
+  vite-plus: ^0.2.1
   # vite: npm:@voidzero-dev/vite-plus-core@^0.1.21
   # vitest: npm:@voidzero-dev/vite-plus-test@^0.1.21
   # vite-plus: ^0.1.21
 minimumReleaseAgeExclude:
-  - vite-plugin-vue-router-auto-generate-const@0.1.0
+  - vite-plugin-vue-router-auto-generate-const@0.2.0
