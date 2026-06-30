@@ -9,7 +9,6 @@ import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.PosixFilePermission;
@@ -48,25 +47,19 @@ public class UnixDomainSocketPermissionInitializer {
             return;
         }
 
-        String udsPath = getUdsPath(config);
-        var path = Path.of(udsPath);
-        try {
-            Files.createDirectories(path.getParent());
-        } catch (FileAlreadyExistsException ignore) {
-        } catch (IOException | UnsupportedOperationException e) {
-            Log.warnf(e, "尝试创建 UDS 文件目录[%s]失败", path.getParent());
-        }
+        String udsPathInString = getUdsPath(config);
+        var path = Path.of(udsPathInString);
 
         if (!Files.exists(path)) {
-            Log.warnf("UDS 文件不存在，跳过权限设置: %s", udsPath);
+            Log.warnf("UDS 文件不存在，跳过权限设置: %s", udsPathInString);
             return;
         }
 
         try {
             Files.setPosixFilePermissions(path, Set.of(PosixFilePermission.values()));
-            Log.infof("已设置 UDS 文件权限为完全开放: %s", udsPath);
+            Log.infof("已设置 UDS 文件权限为完全开放: %s", udsPathInString);
         } catch (IOException e) {
-            Log.errorf(e, "设置 UDS 文件权限失败: %s", udsPath);
+            Log.errorf(e, "设置 UDS 文件权限失败: %s", udsPathInString);
         }
     }
 }

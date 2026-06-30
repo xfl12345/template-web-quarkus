@@ -7,6 +7,8 @@ import io.quarkus.runtime.annotations.StaticInitSafe;
 import io.quarkus.vertx.core.runtime.config.VertxConfiguration;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -51,18 +53,28 @@ public class OsAwareConfigSource implements ConfigSource {
             return;
         }
 
-        String udsDirPath = "/var/run";
-        String fallbackUdsFilePath = "/tmp/app/quarkus.sock";
+        Path udsDirPath = Path.of("/var/run");
+        Path fallbackUdsFilePath = Path.of("/tmp/app/quarkus.sock");
         var unixConfig = Map.of(
                 "quarkus.vertx.prefer-native-transport", "true",
                 "quarkus.http.domain-socket-enabled", "true");
 
-        var writable = Files.isWritable(Path.of(udsDirPath));
+        var writable = Files.isWritable(udsDirPath);
         if (!writable) {
             Log.warnf("目录 [%s] 不可写，UDS 的默认路径将使用备用路径 [%s]", udsDirPath, fallbackUdsFilePath);
+            udsDirPath = fallbackUdsFilePath.getParent();
+            try {
+                Log.infof("正在尝试创建 UDS 文件目录[%s]", udsDirPath);
+                Files.createDirectories(udsDirPath);
+                Log.infof("UDS 文件目录[%s]创建成功", udsDirPath);
+            } catch (FileAlreadyExistsException ignore) {
+                Log.infof("UDS 文件目录[%s]已存在", udsDirPath);
+            } catch (IOException | UnsupportedOperationException e) {
+                Log.warnf(e, "尝试创建 UDS 文件目录[%s]失败", udsDirPath);
+            }
             var tempMap = HashMap.<String, String>newHashMap(unixConfig.size() + 1);
             tempMap.putAll(unixConfig);
-            tempMap.put("quarkus.http.domain-socket", fallbackUdsFilePath);
+            tempMap.put("quarkus.http.domain-socket", fallbackUdsFilePath.toString());
             unixConfig = Map.copyOf(tempMap);
         }
 
