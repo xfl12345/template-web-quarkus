@@ -45,6 +45,24 @@ dependencies {
 group = 'org.acme'
 version = '0.0.1-SNAPSHOT'
 
+sourceSets {
+    main {
+        java {
+            srcDirs += 'build/classes/java/quarkus-generated-sources/grpc'
+        }
+    }
+}
+
+tasks.register('printSourceSets') {
+    doLast {
+        sourceSets.each {
+            println it
+            it.java.srcDirs.each { println "-> ${projectDir.relativePath(it)}" }
+            println ""
+        }
+    }
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
