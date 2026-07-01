@@ -36,7 +36,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-quartz'
     implementation 'io.quarkus:quarkus-rest-jackson'
     implementation 'io.quarkus:quarkus-rest-client-jackson'
-    implementation 'io.quarkiverse.quinoa:quarkus-quinoa:2.8.2'
+    implementation 'io.quarkiverse.quinoa:quarkus-quinoa:2.8.3'
     implementation 'io.quarkus:quarkus-arc'
     testImplementation 'io.quarkus:quarkus-junit'
     testImplementation 'io.rest-assured:rest-assured'
